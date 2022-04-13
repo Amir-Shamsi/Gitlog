@@ -1,7 +1,7 @@
 import requests
 import simplejson as json
 from enum import Enum, unique
-
+from .lld import Loader
 
 class User:
     @unique
@@ -30,9 +30,11 @@ class User:
                 raise RuntimeError('Username \'{}\' not found!'.format(username)) from kerr
 
     def _prof_jdata_init(self):
+        loader = Loader("Loading Profile Data...", 0.08).start()
         if self._profile_data is not None: return
         url = self.Url['user'].value.format(self.username)
         self._profile_data = json.loads((requests.get(url)).text)
+        loader.stop()
 
     def get_bio(self):
         self._prof_jdata_init()
@@ -59,7 +61,9 @@ class User:
         return self._repos_data
 
     def _repo_jdata_init(self):
+        loader = Loader("Loading Repositories Data...", 0.08).start()
         if self._repos_data is not None: return
         url = self.Url['repo'].value.format(self.username)
         response = json.loads((requests.get(url)).text)
         self._repos_data = [repo['name'] for repo in response]
+        loader.stop()
