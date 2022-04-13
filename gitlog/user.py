@@ -59,7 +59,7 @@ class User:
         return self._repos_data
 
     def _repo_jdata_init(self):
-        if self._profile_data is not None: return
-        url = self.Url['repo'].format(self.username)
-        self._repos_data = json.loads((requests.get(url)).text)
-
+        if self._repos_data is not None: return
+        url = self.Url['repo'].value.format(self.username)
+        response = json.loads((requests.get(url)).text)
+        self._repos_data = [repo['name'] for repo in response]
