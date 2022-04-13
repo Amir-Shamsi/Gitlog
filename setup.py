@@ -31,6 +31,7 @@ setup(
     install_requires=[],
     download_url='https://github.com/Amir-Shamsi/Gitlog/archive/refs/tags/' + get_version() + '.tar.gz',
 
+    requires=['requests==2.27.1', 'simplejson==3.17.6'],
     keywords=['Github', 'logs', 'api', 'git'],
     setup_requires=['pytest-runner==6.0.0'],
     tests_require=['pytest==7.1.1'],
