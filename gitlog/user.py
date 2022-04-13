@@ -44,7 +44,7 @@ class User:
 
     def get_followings_count(self):
         self._prof_jdata_init()
-        return self._profile_data['followings']
+        return self._profile_data['following']
 
     def get_created_date(self):
         self._prof_jdata_init()
