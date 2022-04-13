@@ -22,13 +22,16 @@ class User:
 
         if fullname or profile_url or avatar_url is None:
             self._prof_jdata_init()
-            self.fullname = self._profile_data['name']
-            self.avatar_url = self._profile_data['avatar_url']
-            self.profile_url = self._profile_data['url']
+            try:
+                self.fullname = self._profile_data['name']
+                self.avatar_url = self._profile_data['avatar_url']
+                self.profile_url = self._profile_data['url']
+            except KeyError as kerr:
+                raise RuntimeError('Username \'{}\' not found!'.format(username)) from kerr
 
     def _prof_jdata_init(self):
         if self._profile_data is not None: return
-        url = self.Url['user'].format(self.username)
+        url = self.Url['user'].value.format(self.username)
         self._profile_data = json.loads((requests.get(url)).text)
 
     def get_bio(self):
