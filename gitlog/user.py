@@ -1,65 +1,76 @@
-import requests
-import simplejson as json
-from enum import Enum, unique
+import queue
+import threading
 
+from .follow import Follow
+from .profile import Profile
+from .repo import Repo
 
-class User:
-    @unique
-    class Url(Enum):
-        user = 'https://api.github.com/users/{}'
-        repo = 'https://api.github.com/users/{}/repos'
+class User(Follow, Repo, Profile):
 
-    id = None
     username = None
-    fullname = None
-    profile_url = None
-    avatar_url = None
-    _profile_data = None
-    _repos_data = None
 
-    def __init__(self, username: str, fullname=None, profile_url=None, avatar_url=None):
+    def __init__(self, username: str, fullname=None, profile_url=None, avatar_url=None, logs=True):
+        Profile.__init__(self, username, fullname, profile_url, avatar_url, logs)
+        Repo.__init__(self, logs)
+        Follow.__init__(self, logs)
         self.username = username
-
-        if fullname or profile_url or avatar_url is None:
-            self._prof_jdata_init()
-            try:
-                self.fullname = self._profile_data['name']
-                self.avatar_url = self._profile_data['avatar_url']
-                self.profile_url = self._profile_data['url']
-            except KeyError as kerr:
-                raise RuntimeError('Username \'{}\' not found!'.format(username)) from kerr
-
-    def _prof_jdata_init(self):
-        if self._profile_data is not None: return
-        url = self.Url['user'].value.format(self.username)
-        self._profile_data = json.loads((requests.get(url)).text)
+        self._repos_data, self._followers_data, self._followings_data = [], [], []
 
     def get_bio(self):
-        self._prof_jdata_init()
         return self._profile_data['bio']
 
     def get_followers_count(self):
-        self._prof_jdata_init()
         return self._profile_data['followers']
 
     def get_followings_count(self):
-        self._prof_jdata_init()
-        return self._profile_data['followings']
+        return self._profile_data['following']
 
     def get_created_date(self):
-        self._prof_jdata_init()
         return self._profile_data['created_at']
 
     def get_location(self):
-        self._prof_jdata_init()
         return self._profile_data['location']
 
-    def get_repos(self):
-        self._repo_jdata_init()
-        return self._repos_data
+    def get_repos(self, *keys, count=100):
+        if len(keys) == 0:
+            keys=['name', 'description']
+        self._repo_jdata_init(count, self.username)
+        repos, _cc = [], 0
+        for repo in self._repos_data:
+            if _cc == count: break
+            try:
+                repos.append({key: repo[key] for key in keys})
+            except KeyError as ky_err:
+                raise RuntimeError('Key {} is invalid for repository info!'.format(ky_err))
+            _cc += 1
+        return repos
 
-    def _repo_jdata_init(self):
-        if self._repos_data is not None: return
-        url = self.Url['repo'].value.format(self.username)
-        response = json.loads((requests.get(url)).text)
-        self._repos_data = [repo['name'] for repo in response]
+    def get_followers(self, count=100, _q=None):
+        self._followers_jdata_init(count, self.username)
+        _res_fo = [data['login'] for data in self._followers_data][:count]
+        if isinstance(_q, queue.Queue): _q.put(_res_fo)
+        else: return _res_fo
+
+    def get_followings(self, count=100, _q=None):
+        self._followings_jdata_init(count, self.username)
+        _res_fo = [data['login'] for data in self._followings_data][:count]
+        if isinstance(_q, queue.Queue): _q.put(_res_fo)
+        else: return _res_fo
+
+    def _get_follow_data(self, count):
+        _qfg, _qfr = queue.Queue(), queue.Queue()
+        _tfg = threading.Thread(target=self.get_followings, args=(count, _qfg))
+        _tfr = threading.Thread(target=self.get_followers, args=(count, _qfr))
+        _tfr.start(), _tfg.start()
+        _tfr.join(), _tfg.join()
+        return _qfg.get(), _qfr.get()
+
+    def get_non_followers(self, count=1000):
+        _followings, _followers = self._get_follow_data(count)
+        return [each for each in _followings if each not in _followers][:count]
+
+    def get_non_followings(self, count=1000):
+        _followings, _followers = self._get_follow_data(count)
+        return [each for each in _followers if each not in _followings][:count]
+
+
