@@ -9,10 +9,10 @@ class User(Follow, Repo, Profile):
 
     username = None
 
-    def __init__(self, username: str, fullname=None, profile_url=None, avatar_url=None, logs=True):
-        Profile.__init__(self, username, fullname, profile_url, avatar_url, logs)
-        Repo.__init__(self, logs)
-        Follow.__init__(self, logs)
+    def __init__(self, username: str, fullname=None, profile_url=None, avatar_url=None, terminal_logs=True):
+        Profile.__init__(self, username, fullname, profile_url, avatar_url, terminal_logs)
+        Repo.__init__(self, terminal_logs)
+        Follow.__init__(self, terminal_logs)
         self.username = username
         self._repos_data, self._followers_data, self._followings_data = [], [], []
 
