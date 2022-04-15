@@ -1,4 +1,6 @@
 import unittest
+from datetime import datetime
+
 from gitlog import User
 
 class GitlogUser(unittest.TestCase):
@@ -43,7 +45,7 @@ class GitlogUser(unittest.TestCase):
         self.assertEqual(user.get_followers_count(), 37)
         self.assertEqual(user.get_followings_count(), 23)
         self.assertEqual(user.get_location(), 'Earth')
-        self.assertEqual(user.get_created_date(), "2020-01-02T10:06:09Z")
+        self.assertEqual(user.get_created_date(), datetime.strptime('2020-01-02 10:06:09', '%Y-%m-%d %H:%M:%S'))
         self.assertEqual(user.get_bio(),
                          'Computer engineer with 2+ years of work experience | It’s going to be interesting to see how society deals with synthetics, but it will definitely be cool 🌃')
 
