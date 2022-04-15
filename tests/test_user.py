@@ -3,7 +3,7 @@ from gitlog import User
 
 class GitlogUser(unittest.TestCase):
     def test_user(self):
-        user = User(username='Amir-Shamsi')
+        user = User(username='Amir-Shamsi', terminal_logs=True)
         repo = user.get_repos()
         expected_repo = [{'name': 'Amir-Shamsi', 'description': 'My GitHub Profile README 🙂'},
                          {'name': 'code-generator-and-uml-diagram',
@@ -40,8 +40,8 @@ class GitlogUser(unittest.TestCase):
         self.assertEqual(user.fullname, 'Amir Shamsi')
         self.assertEqual(user.avatar_url, 'https://avatars.githubusercontent.com/u/59437623?v=4')
         self.assertEqual(repo, expected_repo)
-        self.assertEqual(user.get_followers_count(), 33)
-        self.assertEqual(user.get_followings_count(), 19)
+        self.assertEqual(user.get_followers_count(), 37)
+        self.assertEqual(user.get_followings_count(), 23)
         self.assertEqual(user.get_location(), 'Earth')
         self.assertEqual(user.get_created_date(), "2020-01-02T10:06:09Z")
         self.assertEqual(user.get_bio(),
