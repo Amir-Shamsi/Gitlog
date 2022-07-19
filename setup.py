@@ -34,7 +34,7 @@ setup(
     requires=['requests==2.27.1', 'simplejson==3.17.6'],
     keywords=['Github', 'logs', 'api', 'git'],
     setup_requires=['pytest-runner==6.0.0'],
-    tests_require=['pytest==7.1.1'],
+    tests_require=['pytest==7.1.2'],
     test_suite='tests',
     include_package_data=True,
     zip_safe=False,
