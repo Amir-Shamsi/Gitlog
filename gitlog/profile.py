@@ -29,7 +29,7 @@ class Profile:
 
     def _prof_jdata_init(self):
         if self._profile_data is not None: return
-        if self._logs: loader = Loader("Loading Profile Data...", 0.08, 'Profile loaded!').start()
+        if self._terminal_logs: loader = Loader("Loading Profile Data...", 0.08, 'Profile loaded!').start()
         url = Url['user'].value.format(self.username)
         self._profile_data = json.loads((requests.get(url)).text)
         if self._terminal_logs: loader.stop()
