@@ -62,6 +62,43 @@ then you can use bassed on what you need:
 # ...
 ```
 
+2. to get your github or someone else github information:
+```python3
+user = User('amir-shamsi', terminal_logs=True)
+
+print(user.get_repos(count=10))
+# ...
+```
+
+3. to get your github or someone else github information:
+```python3
+user = User('amir-shamsi', terminal_logs=True)
+
+print(user.get_followers_count())
+
+
+followings_10 = user.get_followings(count=10)
+print(followings_10)
+
+followings_30 = user.get_followings(count=30)
+print(followings_30)
+# ...
+```
+
+4. to get your github or someone else github information:
+```python3
+user = User('amir-shamsi', terminal_logs=True)
+
+print(user.get_followers_count())
+
+followers_10 = user.get_followers(count=10)
+print(followers_10)
+
+followers_40 = user.get_followers(count=40)
+print(followers_40)
+# ...
+```
+
 
 ## Support 
 Supported versions of python for this library are as follow:
