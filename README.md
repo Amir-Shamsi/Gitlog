@@ -46,7 +46,7 @@ for more exact usage documents you can see the example files [here](https://gith
 from gitlog import User
 ```
 
-then you can them bassed on what you need.
+then you can use bassed on what you need:
 
 1. to get your github or someone else github information:
 ```python3
