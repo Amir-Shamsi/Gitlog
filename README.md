@@ -50,7 +50,16 @@ then you can them bassed on what you need.
 
 1. to get your github or someone else github information:
 ```python3
-findPeak()
+>>> user = User('amir-shamsi', terminal_logs=True) # make "terminal_logs" True if you want to see the info loading logs
+
+#  access the user information like this -->
+
+>>> user.username
+>>> user.fullname
+>>> user.id
+>>> user.get_bio()
+>>> user.get_location()
+# ...
 ```
 
 
