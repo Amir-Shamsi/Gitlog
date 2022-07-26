@@ -56,19 +56,26 @@ then you can use bassed on what you need:
 
 >>> user.username
 # amir-shamsi
+
 >>> user.fullname
 # Amir Shamsi
+
 >>> user.id
 # 59437623
+
 >>> user.profile_url
 # https://api.github.com/users/Amir-Shamsi
+
 >>> user.avatar_url
 # https://avatars.githubusercontent.com/u/59437623?v=4
+
 >>> user.get_created_date()
 # 2020-01-02 10:06:09
+
 >>> user.get_bio()
 # Computer engineering student (at Shiraz University🏛️) with 2+ years of work experience | It’s going to be
 # interestin to see how society deals with synthetics🌃
+
 >>> user.get_location()
 # Earth
 # ...
