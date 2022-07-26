@@ -2,7 +2,7 @@ import os
 import re
 from setuptools import find_packages, setup
 
-with open('README.md') as f:
+with open('README.md', encoding='cp850') as f:
     long_description = f.read()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -31,8 +31,8 @@ setup(
     install_requires=[],
     download_url='https://github.com/Amir-Shamsi/Gitlog/archive/refs/tags/' + get_version() + '.tar.gz',
 
-    requires=['requests==2.27.1', 'simplejson==3.17.6'],
-    keywords=['Github', 'logs', 'api', 'git'],
+    requires=['requests', 'simplejson'],
+    keywords=['Github', 'logs', 'api', 'git', 'followers', 'followings', 'profile'],
     setup_requires=['pytest-runner==6.0.0'],
     tests_require=['pytest==7.1.2'],
     test_suite='tests',
