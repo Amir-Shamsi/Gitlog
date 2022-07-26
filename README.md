@@ -48,57 +48,82 @@ from gitlog import User
 
 then you can use bassed on what you need:
 
-1. to get your github or someone else github information:
+1. to get your github or someone else github's `general information`:
 ```python3
 >>> user = User('amir-shamsi', terminal_logs=True) # make "terminal_logs" True if you want to see the info loading logs
 
 #  access the user information like this -->
 
 >>> user.username
+# amir-shamsi
 >>> user.fullname
+# Amir Shamsi
 >>> user.id
+# 59437623
+>>> user.profile_url
+# https://api.github.com/users/Amir-Shamsi
+>>> user.avatar_url
+# https://avatars.githubusercontent.com/u/59437623?v=4
+>>> user.get_created_date()
+# 2020-01-02 10:06:09
 >>> user.get_bio()
+# Computer engineering student (at Shiraz University🏛️) with 2+ years of work experience | It’s going to be
+# interestin to see how society deals with synthetics🌃
 >>> user.get_location()
+# Earth
 # ...
 ```
 
-2. to get your github or someone else github information:
+2. to get your github or someone else github's `repositories information`:
 ```python3
-user = User('amir-shamsi', terminal_logs=True)
+>>> user = User('amir-shamsi', terminal_logs=True) # make "terminal_logs" True if you want to see the info loading logs
 
-print(user.get_repos(count=10))
-# ...
+>>> user.get_repos(count=2) # set a count for get the the exact amount of repositories default is 100
+#  [{
+#    'name': 'Amir-Shamsi',
+#    'description': 'My GitHub Profile README 🙂'
+#   },
+#   {
+#    'name': 'CleaningBot-partially-observable',
+#    'description': 'cleaning agent where the environment is partially observable'
+#  }]
 ```
 
-3. to get your github or someone else github information:
+3. to get your github or someone else github's `followings information`:
 ```python3
-user = User('amir-shamsi', terminal_logs=True)
+>>> user = User('amir-shamsi', terminal_logs=True) # make "terminal_logs" True if you want to see the info loading logs
 
-print(user.get_followers_count())
+>>> user.get_followings_count() # get user's followings count
 
-
-followings_10 = user.get_followings(count=10)
-print(followings_10)
-
-followings_30 = user.get_followings(count=30)
-print(followings_30)
-# ...
+>>> followings = user.get_followings(count=10) # set a count for get the exact amount of followings as a list
+#                                                default is 1000
 ```
 
-4. to get your github or someone else github information:
+4. to get your github or someone else github's `followers information`:
 ```python3
-user = User('amir-shamsi', terminal_logs=True)
+>>> user = User('amir-shamsi', terminal_logs=True) # make "terminal_logs" True if you want to see the info loading logs
 
-print(user.get_followers_count())
+>>> user.get_followers_count() # get user's followers count
 
-followers_10 = user.get_followers(count=10)
-print(followers_10)
-
-followers_40 = user.get_followers(count=40)
-print(followers_40)
-# ...
+>>> followers = user.get_followers(count=10) # set a count for get the the exact amount of followers as a list
+#                                              default is 1000
 ```
 
+5. to get your github or someone else github's `non-followers information`:
+```python3
+>>> user = User('amir-shamsi', terminal_logs=True) # make "terminal_logs" True if you want to see the info loading logs
+
+>>> non_followers = user.get_non_followers(count=10) # set a count for get the exact amount of non-followers as a list
+#                                                      default is 1000
+```
+
+5. to get your github or someone else github's `non-followings information`:
+```python3
+>>> user = User('amir-shamsi', terminal_logs=True) # make "terminal_logs" True if you want to see the info loading logs
+
+>>> non_followings = user.get_non_followings(count=10) # set a count for get the exact amount of non-followings as a
+#                                                        list default is 1000
+```
 
 ## Support 
 Supported versions of python for this library are as follow:
