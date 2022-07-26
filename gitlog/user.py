@@ -97,11 +97,11 @@ class User(Follow, Repo, Profile):
         return _qfg.get(), _qfr.get()
 
     def get_non_followers(self, count=1000) -> list[Any]:
-        _followings, _followers = self._get_follow_data(count)
+        _followings, _followers = self._get_follow_data(1000000)
         return [each for each in _followings if each not in _followers][:count]
 
     def get_non_followings(self, count=1000) -> list[Any]:
-        _followings, _followers = self._get_follow_data(count)
+        _followings, _followers = self._get_follow_data(1000000)
         return [each for each in _followers if each not in _followings][:count]
 
 
