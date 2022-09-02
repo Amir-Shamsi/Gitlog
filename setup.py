@@ -34,7 +34,7 @@ setup(
     requires=['requests', 'simplejson'],
     keywords=['Github', 'logs', 'api', 'git', 'followers', 'followings', 'profile'],
     setup_requires=['pytest-runner==6.0.0'],
-    tests_require=['pytest==7.1.2'],
+    tests_require=['pytest==7.1.3'],
     test_suite='tests',
     include_package_data=True,
     zip_safe=False,
